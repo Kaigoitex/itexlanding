@@ -117,6 +117,32 @@ header {
     }
   </style>
 </head>
+  <script>
+  // When YouTube iframe is ready
+  function onYouTubePlayerAPIReady() {
+    var player = new YT.Player('player', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  // When player state changes
+  function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+      gtag('event', 'play', {
+        'event_category': 'Video',
+        'event_label': 'ITEX Intro Video'
+      });
+    }
+  }
+
+  // Load YouTube API
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+</script>
 <body>
   <header>
   <div class="header-logo">
@@ -158,14 +184,14 @@ header {
   </section>
 
   <section class="video-container">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/DVBaICcGVtM?si=rWNeyAewdrvyikku" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe id="player" width="560" height="315" src="https://www.youtube.com/embed/DVBaICcGVtM?si=rWNeyAewdrvyikku" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </section>
 
   <section class="cta">
     <img src="itex-logo.png" alt="ITEX Logo" class="section-logo">
     <h2>Let’s See If You Qualify</h2>
     <p>Book a 10-minute call to explore how ITEX can bring new customers to your shop.</p>
-    <button onclick="window.location.href='https://calendly.com/kai-go-itex/itex-one-on-one'">Schedule a Call</button>
+    <a href="https://calendly.com/kai-go-itex/itex-one-on-one" target="_blank" onclick="gtag('event', 'click', { 'event_category': 'CTA', 'event_label': 'Calendly Schedule' });">Schedule a call</a>
   </section>
 
 </body>
